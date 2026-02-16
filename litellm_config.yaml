@@ -1,0 +1,5 @@
+model_list:
+  - model_name: gpt-4  # Nanobot will request this
+    litellm_params:
+      model: ollama/gpt-oss:20b
+      api_base: os.environ/OLLAMA_BASE_URL # We will pass this at runtime
