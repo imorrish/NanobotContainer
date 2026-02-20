@@ -8,6 +8,8 @@ ENV PYTHONUNBUFFERED=1 \
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
+    nodejs \
+    npm \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,6 +26,9 @@ RUN uv pip install --system .
 
 # Install LiteLLM with proxy support
 RUN uv pip install --system 'litellm[proxy]'
+
+# (Optional) Preinstall MCP server package so first run is faster/offline-friendlier.
+RUN npm install -g @microsoft/m365agentstoolkit-mcp@latest
 
 # Copy config and entrypoint
 COPY litellm_config.yaml .

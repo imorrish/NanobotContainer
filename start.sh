@@ -38,6 +38,19 @@ if [ ! -f "$CONFIG_FILE" ]; then
 			"model": "gpt-4"
 		}
 	},
+	"tools": {
+		"mcpServers": {
+			"m365agentstoolkit": {
+				"command": "npx",
+				"args": [
+					"-y",
+					"@microsoft/m365agentstoolkit-mcp@latest",
+					"server",
+					"start"
+				]
+			}
+		}
+	},
 	"gateway": {
 		"host": "0.0.0.0",
 		"port": 8000
