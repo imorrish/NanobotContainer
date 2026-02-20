@@ -20,9 +20,10 @@ export OPENAI_BASE_URL=${OPENAI_BASE_URL:-http://localhost:4000/v1}
 # Ensure nanobot config exists and points to the proxy
 CONFIG_DIR=${HOME:-/root}/.nanobot
 CONFIG_FILE="$CONFIG_DIR/config.json"
-WORKSPACE_DIR="$CONFIG_DIR/workspace"
+DATA_DIR=${NANOBOT_DATA_DIR:-/data}
+WORKSPACE_DIR=${NANOBOT_WORKSPACE_DIR:-"$DATA_DIR/workspace"}
 
-mkdir -p "$CONFIG_DIR" "$WORKSPACE_DIR"
+mkdir -p "$CONFIG_DIR" "$DATA_DIR" "$WORKSPACE_DIR"
 
 if [ ! -f "$CONFIG_FILE" ]; then
 	cat > "$CONFIG_FILE" <<'JSON'
@@ -35,6 +36,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 	},
 	"agents": {
 		"defaults": {
+			"workspace": "/data/workspace",
 			"model": "gpt-4"
 		}
 	},

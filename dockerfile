@@ -13,6 +13,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     && rm -rf /var/lib/apt/lists/*
 
+# Create non-root user and persistent data mount point
+# (Debian/Ubuntu syntax; Alpine's `adduser -D` flags don't apply here.)
+RUN adduser --disabled-password --gecos "" \
+    --home /home/nanobot --shell /bin/bash nanobot \
+    && mkdir -p /data /home/nanobot/.nanobot \
+    && chown -R nanobot:nanobot /data /home/nanobot
+
 # Install UV
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
@@ -37,5 +44,10 @@ RUN chmod +x start.sh
 
 EXPOSE 8000 4000
 
-ENTRYPOINT ["./start.sh"]
+VOLUME ["/data"]
+
+USER nanobot
+WORKDIR /home/nanobot
+
+ENTRYPOINT ["/app/start.sh"]
 CMD ["gateway", "-p", "8000"]
