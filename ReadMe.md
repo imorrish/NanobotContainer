@@ -46,6 +46,7 @@ docker run -d \
   -v "$(pwd)/nanobot-config:/home/nanobot/.nanobot" \
   --add-host=host.docker.internal:host-gateway \
   -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
+  -e LITELLM_MASTER_KEY=pass@word! \
   nanobot:local
 
 OR - ollama remote
@@ -56,6 +57,7 @@ docker run -d \
   -v "$(pwd)/data:/data" \
   -v "$(pwd)/nanobot-config:/home/nanobot/.nanobot" \
   -e OLLAMA_BASE_URL=http://192.168.1.97:11434 \
+  -e LITELLM_MASTER_KEY=pass@word! \
   nanobot:local
 
 Troubleshoot (if container exits)
@@ -68,3 +70,11 @@ M365 Agents Toolkit MCP server
 - This image includes Node.js/npm and installs `@microsoft/m365agentstoolkit-mcp`.
 - The container auto-generates `~/.nanobot/config.json` (inside the container) with an MCP server entry that runs:
   `npx -y @microsoft/m365agentstoolkit-mcp@latest server start`
+
+Zoom MCP server
+
+- This image also installs `zoom-mcp` (Python MCP server).
+- To use it, pass these env vars when running the container:
+  - `ZOOM_API_KEY`
+  - `ZOOM_API_SECRET`
+  - `ZOOM_ACCOUNT_ID`

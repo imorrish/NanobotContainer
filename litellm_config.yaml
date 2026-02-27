@@ -1,3 +1,5 @@
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
 model_list:
   - model_name: gpt-4  # Nanobot will request this
     litellm_params:

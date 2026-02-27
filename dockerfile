@@ -34,6 +34,10 @@ RUN uv pip install --system .
 # Install LiteLLM with proxy support
 RUN uv pip install --system 'litellm[proxy]'
 
+# Install Zoom MCP server (Python) so Nanobot can launch it as an MCP tool.
+# Repo has no published PyPI package, so install from Git.
+RUN uv pip install --system "zoom-mcp @ git+https://github.com/echelon-ai-labs/zoom-mcp.git"
+
 # (Optional) Preinstall MCP server package so first run is faster/offline-friendlier.
 RUN npm install -g @microsoft/m365agentstoolkit-mcp@latest
 
