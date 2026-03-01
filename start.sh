@@ -16,7 +16,7 @@ for i in $(seq 1 30); do
     sleep 1
 done
 # Configure Nanobot/OpenAI to use the local proxy
-export OPENAI_API_KEY=${OPENAI_API_KEY:-fake-key}
+export OPENAI_API_KEY=${OPENAI_API_KEY:-$LITELLM_MASTER_KEY}
 export OPENAI_BASE_URL=${OPENAI_BASE_URL:-http://localhost:4000/v1}
 
 # Ensure nanobot config exists and points to the proxy
