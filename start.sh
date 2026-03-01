@@ -32,7 +32,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 {
 	"providers": {
 		"openai": {
-			"apiKey": "fake-key",
+			"apiKey": "12345",
 			"apiBase": "http://localhost:4000/v1"
 		}
 	},

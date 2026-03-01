@@ -31,12 +31,22 @@ RUN git clone https://github.com/HKUDS/nanobot.git .
 # Install Nanobot dependencies
 RUN uv pip install --system .
 
-# Install LiteLLM with proxy support
+# Enforce Nanobot's required versions (prevents rich/websockets mismatch)
+RUN uv pip install --system --upgrade \
+    "rich>=14.0.0,<15.0.0" \
+    "websockets>=16.0,<17.0"
+
+# Install LiteLLM with proxy support (system env)
 RUN uv pip install --system 'litellm[proxy]'
 
-# Install Zoom MCP server (Python) so Nanobot can launch it as an MCP tool.
-# Repo has no published PyPI package, so install from Git.
-RUN uv pip install --system "zoom-mcp @ git+https://github.com/echelon-ai-labs/zoom-mcp.git"
+# Install Zoom MCP server in an isolated venv to avoid mcp version conflicts
+RUN python -m venv /opt/zoom-mcp-venv \
+    && /opt/zoom-mcp-venv/bin/pip install --no-cache-dir -U pip \
+    && /opt/zoom-mcp-venv/bin/pip install --no-cache-dir \
+        "zoom-mcp @ git+https://github.com/echelon-ai-labs/zoom-mcp.git"
+
+# Make zoom-mcp available on PATH for the non-root user
+ENV PATH="/opt/zoom-mcp-venv/bin:${PATH}"
 
 # (Optional) Preinstall MCP server package so first run is faster/offline-friendlier.
 RUN npm install -g @microsoft/m365agentstoolkit-mcp@latest
