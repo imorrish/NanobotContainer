@@ -31,7 +31,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 	cat > "$CONFIG_FILE" <<'JSON'
 {
 	"providers": {
-		"openai": {
+		"ollama": {
 			"apiKey": "12345",
 			"apiBase": "http://localhost:4000/v1"
 		}
@@ -39,7 +39,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 	"agents": {
 		"defaults": {
 			"workspace": "/data/workspace",
-			"model": "gpt-4"
+			"model": "gpt-oss:20b"
 		}
 	},
 	"tools": {

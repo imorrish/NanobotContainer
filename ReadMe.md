@@ -39,6 +39,9 @@ Important:
 
 3. Run the container - ollama in docker
 
+Ubuntu bash:
+
+```bash
 docker run -d \
   -p 8000:8000 \
   -p 4000:4000 \
@@ -46,24 +49,55 @@ docker run -d \
   -v "$(pwd)/nanobot-config:/home/nanobot/.nanobot" \
   --add-host=host.docker.internal:host-gateway \
   -e OLLAMA_BASE_URL=http://host.docker.internal:11434 \
-  -e LITELLM_MASTER_KEY=pass@word! \
+  -e LITELLM_MASTER_KEY='pass@word!' \
   nanobot:local
 
-OR - ollama remote
-
+# OR - ollama remote
 docker run -d \
   -p 8000:8000 \
   -p 4000:4000 \
   -v "$(pwd)/data:/data" \
   -v "$(pwd)/nanobot-config:/home/nanobot/.nanobot" \
   -e OLLAMA_BASE_URL=http://192.168.1.97:11434 \
-  -e LITELLM_MASTER_KEY=pass@word! \
+  -e LITELLM_MASTER_KEY='pass@word!' \
   nanobot:local
+```
+
+Windows PowerShell (`pwsh`): (PowerShell uses backtick for line continuation)
+
+```powershell
+docker run -d `
+  -p 8000:8000 `
+  -p 4000:4000 `
+  -v "${PWD}/data:/data" `
+  -v "${PWD}/nanobot-config:/home/nanobot/.nanobot" `
+  --add-host=host.docker.internal:host-gateway `
+  -e OLLAMA_BASE_URL=http://host.docker.internal:11434 `
+  -e LITELLM_MASTER_KEY='pass@word!' `
+  nanobot:local
+
+# OR - ollama remote
+docker run -d `
+  -p 8000:8000 `
+  -p 4000:4000 `
+  -v "${PWD}/data:/data" `
+  -v "${PWD}/nanobot-config:/home/nanobot/.nanobot" `
+  -e OLLAMA_BASE_URL=http://192.168.1.97:11434 `
+  -e LITELLM_MASTER_KEY='pass@word!' `
+  nanobot:local
+```
 
 Troubleshoot (if container exits)
 
 docker ps -a --last 5
 docker logs <container_id>
+
+Troubleshoot LiteLLM health (with master key)
+
+- Ubuntu bash:
+  `curl -fsS -H "Authorization: Bearer $LITELLM_MASTER_KEY" http://localhost:4000/health`
+- Windows PowerShell (`pwsh`): use `curl.exe` (PowerShell's `curl` is an alias)
+  `curl.exe -fsS -H "Authorization: Bearer $env:LITELLM_MASTER_KEY" http://localhost:4000/health`
 
 M365 Agents Toolkit MCP server
 
