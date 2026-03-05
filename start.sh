@@ -71,4 +71,4 @@ JSON
 fi
 
 echo "Starting Nanobot..."
-exec nanobot "$@"
+# exec nanobot "$@"
