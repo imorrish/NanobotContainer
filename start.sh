@@ -39,7 +39,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 	"agents": {
 		"defaults": {
 			"workspace": "/data/workspace",
-			"model": "gpt-oss:20b"
+			"model": "gpt-4"
 		}
 	},
 	"tools": {
