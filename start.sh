@@ -31,7 +31,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 	cat > "$CONFIG_FILE" <<'JSON'
 {
 	"providers": {
-		"ollama": {
+		"openai": {
 			"apiKey": "12345",
 			"apiBase": "http://localhost:4000/v1"
 		}
@@ -71,4 +71,4 @@ JSON
 fi
 
 echo "Starting Nanobot..."
-# exec nanobot "$@"
+exec nanobot "$@"
